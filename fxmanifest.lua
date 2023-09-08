@@ -2,8 +2,8 @@ fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
 
-description 'qb-invoices created by SquizyEliran#8023'
-version '1.0.0'
+description 'city hall job by ! NTHN#4471'
+version '1.0.1'
 
 shared_scripts {
     '@ox_lib/init.lua',
