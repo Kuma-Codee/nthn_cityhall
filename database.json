@@ -1,0 +1,28 @@
+{
+    "tambang": [
+        {
+            "buyprice": 10000,
+            "item": "iron_bar",
+            "stock": 5000,
+            "sellprice": 500
+        },
+        {
+            "buyprice": 900,
+            "item": "chopper_bar",
+            "stock": 20,
+            "sellprice": 400
+        },
+        {
+            "buyprice": 600,
+            "item": "gold_bar",
+            "stock": 50,
+            "sellprice": 300
+        },
+        {
+            "buyprice": 500,
+            "item": "diamond",
+            "stock": 30,
+            "sellprice": 300
+        }
+    ]
+}
