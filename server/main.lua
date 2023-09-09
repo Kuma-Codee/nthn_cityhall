@@ -66,15 +66,34 @@ RNE('disnaker:server:SellItem', function(TotalPrice, ItemType, ItemCount, Type)
     end
 
     if selectedItem then
-        -- Memeriksa apakah pemain memiliki cukup item untuk dijual
         if Player.Functions.RemoveItem(ItemType, ItemCount) then
-            -- Menambahkan stok dalam database sesuai dengan jumlah yang dijual
             selectedItem.stock = selectedItem.stock + ItemCount
-
-            -- Menambahkan uang ke pemain
             Player.Functions.AddMoney('cash', TotalPrice)
+            SaveResourceFile('disnaker', 'database.json', json.encode(database, {indent = true}), -1)
+        else
+            print("Pemain tidak memiliki cukup item untuk dijual.")
+        end
+    else
+        print("Item tidak ditemukan dalam database.")
+    end
+end)
 
-            -- Menyimpan perubahan dalam file database JSON
+RNE('disnaker:server:ListItem', function(TotalPrice, ItemType, ItemCount, Type)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    -- Mencari objek item dalam database
+    local selectedItem = nil
+    for _, item in ipairs(database[Type]) do
+        if item.item == ItemType then
+            selectedItem = item
+            break
+        end
+    end
+
+    if selectedItem then
+        if Player.Functions.RemoveItem(ItemType, ItemCount) then
+            selectedItem.stock = selectedItem.stock + ItemCount
+            Player.Functions.AddMoney('cash', TotalPrice)
             SaveResourceFile('disnaker', 'database.json', json.encode(database, {indent = true}), -1)
         else
             print("Pemain tidak memiliki cukup item untuk dijual.")

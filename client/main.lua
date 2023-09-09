@@ -287,42 +287,107 @@ end)
 
 RNE('disnaker:client:SettingListItem', function()
     lib.registerContext({
-        id = 'Create_List',
-        title = 'Ambil Pekerjaan',
-        options = 
-    })
-    lib.registerContext({
-        id = 'Setting_Menu',
-        title = 'Ambil Pekerjaan',
+        id = 'List_Item',
+        title = 'Jenis Item',
+        menu = 'Setting_Menu',
         options = {
             {
                 title = 'Tambah Jenis Item',
-                description = 'Tambah / Kurangi stok barang',
+                icon = 'cog',
+                onSelect = function()
+                    local input = lib.inputDialog('Disnaker', {
+                        {type = 'input', label = 'Nama Jenis Barang', description = 'masukkan disini', required = true, min = 4, max = 16},
+                    })
+                    if input then
+                        TriggerServerEvent('')
+                    end
+                end
+            },
+            {
+                title = 'Hapus Jenis Item',
+                icon = 'cog',
+                event = 'disnaker:client:ListItem',
+                args = {
+                    Type = 'delete'
+                }
+            },
+            {
+                title = 'Ubah Jenis Item',
+                icon = 'cog',
+                event = 'disnaker:client:ListItem',
+                args = {
+                    Type = 'change'
+                }
+            },
+        }
+    })
+    lib.registerContext({
+        id = 'Item',
+        title = 'Jenis Item',
+        menu = 'Setting_Menu',
+        options = {
+            {
+                title = 'Tambah Item',
                 icon = 'cog',
                 menu = 'Create_List'
             },
             {
-                title = 'Tambah Item',
-                description = 'Buka / Tutup toko disnaker',
+                title = 'Hapus Item',
                 icon = 'cog',
                 menu = 'Create_Item'
             },
+        }
+    })
+    lib.registerContext({
+        id = 'Setting_Menu',
+        title = 'Perubahan Item',
+        options = {
             {
-                title = 'Hapus Jenis Item',
-                description = 'Ubah Harga Barang',
+                title = 'Jenis Item',
+                description = 'Hapus / Tambah / Ubah Jenis Item',
                 icon = 'cog',
-                menu = 'Delete_List',
+                menu = 'List_Item'
             },
             {
-                title = 'Hapus Item',
-                description = 'Tambah / Kurangi List Barang',
+                title = 'Item',
+                description = 'Tambah / Kurangi Item',
                 icon = 'cog',
-                menu = 'Delete_List',
+                menu = 'Item'
             },
         }
     })
 
     lib.showContext('Setting_Menu')
+end)
+
+RNE('disnaker:client:ListItem', function(args)
+    Type = args.Type
+    local createlist = {}
+    local delelelist = {}
+    local changelist = {}
+
+    lib.registerContext({
+        id = 'Create_ListItem',
+        title = 'Tambah List Item',
+        options = createlist
+    })
+    lib.registerContext({
+        id = 'Delete_ListItem',
+        title = 'Hapus List Item',
+        options = delelelist
+    })
+    lib.registerContext({
+        id = 'Change_ListItem',
+        title = 'Ubah List Item',
+        options = changelist
+    })
+    if Type == 'create' then
+        lib.showContext('Create_ListItem')
+    elseif Type == 'delete' then
+        lib.showContext('Delete_ListItem')
+    else
+        lib.showContext('Change_ListItem')
+    end
 end)
 
 RNE('disnaker:client:SellDisnakerItem', function()
